@@ -1,0 +1,3 @@
+{"ts":1356876450149,"silentsave":true,"restoring":false,"patch":[[]],"length":0}
+{"contributors":[],"silentsave":false,"ts":1356876497291,"patch":[[{"diffs":[[1,"{\r\n  \"name\": \"FastFileShare.js\",\r\n  \"description\": \"Fast file share server, with QR codes and whatnot.\",\r\n  \"version\": \"0.0.1\",\r\n  \"private\": true,\r\n  \"dependencies\": {\r\n    \"express\": \"3.x\"\r\n  }\r\n}"]],"start1":0,"start2":0,"length1":0,"length2":198}]],"length":198,"saved":false}
+{"ts":1356876583045,"patch":[[{"diffs":[[0,"\": \"3.x\""],[1,",\r\n    \"mocha\": \"1.x\""],[0,"\r\n  }\r\n}"]],"start1":182,"start2":182,"length1":16,"length2":37}]],"length":219,"saved":false}

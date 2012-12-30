@@ -1,0 +1,10 @@
+{
+  "name": "FastFileShare.js",
+  "description": "Fast file share server, with QR codes and whatnot.",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "3.x",
+    "mocha": "1.x"
+  }
+}
