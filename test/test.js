@@ -19,7 +19,7 @@ describe("File upload", function() {
     it ("POST /upload with one file should return success", function(done) {
         request
             .post('/upload')
-            .attach('file', 'test/fixtures/test.txt')
+            .attach('userFile', 'test/fixtures/test.txt')
             .end(function(err, res) {
                 res.body.should.have.property('success', true);
                 done();
@@ -29,8 +29,8 @@ describe("File upload", function() {
     it ("POST /upload with multiple files should fail", function(done) {
         request
             .post('/upload')
-            .attach('file', 'test/fixtures/test.txt')
-            .attach('file', 'test/fixtures/test2.txt')
+            .attach('userFile', 'test/fixtures/test.txt')
+            .attach('userFile', 'test/fixtures/test2.txt')
             .end(function(err, res) {
                 res.body.should.have.property('success', false);
                 done();

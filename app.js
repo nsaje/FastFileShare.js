@@ -19,6 +19,8 @@ app.post('/upload', function (req, res) {
 
 	if (req.files.length < 1 || !req.files.hasOwnProperty("userFile")) {
 		die("No files selected!"); return;
+	} else if (!req.files.userFile.hasOwnProperty("path")) {
+		die("Only one file can be uploaded at a time!"); return;
 	}
 
     var filePath = req.files.userFile.path,
