@@ -1,48 +1,45 @@
 var express = require('express');
+var fs = require('fs');
+var qrcode = require('qrcode');
 
 var app = express();
 exports.app = app;
 
-app.use(express.static(__dirname + '/public'));
+app
+	.use(express.bodyParser({uploadDir : __dirname + "/public/u"}))
+	.use(express.static(__dirname + '/public'));
 
-app.listen(process.env.PORT, process.env.IP);
+var PORT = process.env.PORT || 9000
+    , IP = process.env.IP || "localhost";
 
-//var connect = require('connect')
-//    , http = require('http');
-//
-//var app = connect()
-//    .use(connect.logger('dev'))
-//    .use(connect.static('public'))
-//    .use(function(req, res) {
-//        res.end('hello world');
-//    });
-//
-//exports.app = app;
-//
-//
-//http.createServer(app).listen(process.env.PORT, process.env.IP);
+app.post('/upload', function (req, res) {
+	function die(msg) {
+		res.send({success : false, err : msg});
+	}
 
-//var paths = {
-//    '/' : function(req, res) {
-//        console.log("Serving index page");
-//        fs.readFile('index.html', function(error, content) {
-//            if (error) {
-//                res.writeHead(500);
-//                res.end();
-//            } else {
-//                res.writeHead(200, { 'Content-Type': 'text/html' });
-//                res.end(content, 'utf-8');
-//            }
-//        });
-//    }
-//};
-//
-//var server = http.createServer(function(req, res) {
-//    if (req.url in paths) {
-//        paths[req.url].apply(this, [req, res]);
-//    } else {
-//        res.writeHead(404);
-//        res.end();
-//    }
-//});
-//server.listen(process.env.PORT, process.env.IP);
+	if (req.files.length < 1 || !req.files.hasOwnProperty("userFile")) {
+		die("No files selected!"); return;
+	}
+
+    var filePath = req.files.userFile.path,
+    	hashName = filePath.substring(filePath.lastIndexOf('/') + 1);
+    if (! hashName) die ("Problem uploading file.");
+
+    var fileURL = req.headers.origin + '/u/' + hashName; // is this a safe way to generate links?
+    console.log("file url: " + fileURL);
+
+	qrcode.toDataURI(fileURL, function(error, dataURL) {
+		if (error) {
+			die("Error creating QR code."); return;
+		}
+
+		console.log("Qr code created");
+		res.send({
+			success : true,
+			url : fileURL,
+			qrData : dataURL
+		})
+	});
+});
+
+app.listen(PORT, IP);

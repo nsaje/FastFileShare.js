@@ -64,7 +64,8 @@
 			methods.dragHover(e);
 			var files = e.originalEvent.target.files || e.originalEvent.dataTransfer.files;
 			for (var i = 0, f; f = files[i]; i++) {
-				formData.append(f.name, f); // Append each files to the form data
+				formData.append(e.originalEvent.target.name, f); // Different from original: append only one file
+				break;
 			}
 			methods.sendFormData();
 			return false;
